@@ -9,7 +9,14 @@
  * @tparam in the type of the input
  * @tparam out the type of the output
  */
-template <typename in, typename out> class AbstractController {
+template <typename In, typename Out> class AbstractController {
     public:
-        virtual out step(in) = 0;
+        /**
+         * @brief Update the controller
+         *
+         * @param in the input to the controller
+         *
+         * @return out the output of the controller
+         */
+        virtual Out update(In input) = 0;
 };

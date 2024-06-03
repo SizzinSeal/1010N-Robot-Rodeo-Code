@@ -38,6 +38,15 @@ class IMU {
          */
         virtual int getStatus() = 0;
         /**
+         * @brief Get the rotation measured by the IMU
+         *
+         * This function returns the unbounded yaw measured by the IMU.
+         * This means that the yaw can be any number of rotations.
+         *
+         * @return Angle
+         */
+        virtual Angle getRotation() = 0;
+        /**
          * @brief Get the yaw measured by the IMU
          *
          * This function returns the yaw measured by the IMU.

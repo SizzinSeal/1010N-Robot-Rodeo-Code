@@ -1,45 +1,33 @@
 #pragma once
 
-#include "units/Angle.hpp"
+#include "hardware/imu/imu.hpp"
+#include "pros/imu.hpp"
 
-/**
- * @brief IMUStatus enum
- *
- * This enum is used to represent the status of a generic IMU (Inertial Measurement Unit)
- *
- * We use an enum instead of an enum class because implementations of this abstract class
- * may implement additional status codes that are not defined in this enum. We evaluate
- * the enum as an int in the getStatus() function. This way we can still check for the
- * status codes defined in the enum, and for additional status codes that are not defined
- * we can check if the status code is greater than the highest defined status code.
- */
-enum IMUStatus { CALIBRATED = 0, CALIBRATING = 1, NOT_CALIBRATED = 2, UNKOWN_ERROR = 3 };
-
-/**
- * @brief IMUOrientation enum
- *
- * This enum is used to represent the orientation of a generic IMU (Inertial Measurement Unit)
- */
-enum class IMUOrientation { X_UP, X_DOWN, Y_UP, Y_DOWN, Z_UP, Z_DOWN };
-
-/**
- * @class IMU
- *
- * @brief Abstract IMU (Inertial Measurement Unit) class
- */
-class IMU {
+class V5IMU : public IMU {
     public:
+        /**
+         * @brief Construct a new V5IMU object
+         *
+         * @param port the port the IMU is connected to
+         */
+        V5IMU(int port);
+        /**
+         * @brief Construct a new V5IMU object
+         *
+         * @param imu pointer to a PROS IMU
+         */
+        V5IMU(pros::Imu* imu);
         /**
          * @brief Calibrate the IMU, non-blocking
          *
          */
-        virtual void calibrate() = 0;
+        virtual void calibrate() override;
         /**
          * @brief Get the Status of the IMU
          *
          * @return int see #IMUStatus for possible return values
          */
-        virtual int getStatus() = 0;
+        virtual int getStatus() override;
         /**
          * @brief Get the rotation measured by the IMU
          *
@@ -48,7 +36,7 @@ class IMU {
          *
          * @return Angle
          */
-        virtual Angle getRotation() = 0;
+        virtual Angle getRotation() override;
         /**
          * @brief Get the yaw measured by the IMU
          *
@@ -57,64 +45,61 @@ class IMU {
          *
          * @return Angle
          */
-        virtual Angle getYaw() = 0;
+        virtual Angle getYaw() override;
         /**
          * @brief Set the yaw of the IMU
          *
          * @param angle the new yaw
          */
-        virtual void setYaw(Angle angle) = 0;
+        virtual void setYaw(Angle angle) override;
         /**
          * @brief Get the pitch measured by the IMU
          *
          * @return Angle
          */
-        virtual Angle getPitch() = 0;
+        virtual Angle getPitch() override;
         /**
          * @brief Set the pitch of the IMU
          *
          * @param angle the new pitch
          */
-        virtual void setPitch(Angle angle) = 0;
+        virtual void setPitch(Angle angle) override;
         /**
          * @brief Get the roll measured by the IMU
          *
          * @return Angle
          */
-        virtual Angle getRoll() = 0;
+        virtual Angle getRoll() override;
         /**
          * @brief Set the roll of the IMU
          *
          * @param angle the new roll
          */
-        virtual void setRoll(Angle angle) = 0;
+        virtual void setRoll(Angle angle) override;
         /**
          * @brief Get the linear acceleration along the x axis
          *
          * @return LinearAcceleration
          */
-        virtual LinearAcceleration getXAcceleration() = 0;
+        virtual LinearAcceleration getXAcceleration() override;
         /**
          * @brief Get the linear acceleration along the Y axis
          *
          * @return LinearAcceleration
          */
-        virtual LinearAcceleration getYAcceleration() = 0;
+        virtual LinearAcceleration getYAcceleration() override;
         /**
          * @brief Get the linear acceleration along the Z axis
          *
          * @return LinearAcceleration
          */
-        virtual LinearAcceleration getZAcceleration() = 0;
+        virtual LinearAcceleration getZAcceleration() override;
         /**
          * @brief Get the orientation of the IMU
          *
          * @return IMUOrientation
          */
-        virtual IMUOrientation getOrientation() = 0;
-        /**
-         * @brief Destroy the IMU object
-         *
-         */
-        virtual ~IMU();
+        virtual IMUOrientation getOrientation() override;
+    private:
+        const std::unique_ptr<pros::Imu> imu; /** pointer to the PROS Imu*/
 };

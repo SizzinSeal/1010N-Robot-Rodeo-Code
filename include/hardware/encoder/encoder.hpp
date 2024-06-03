@@ -25,14 +25,6 @@ enum EncoderStatus {
 class Encoder {
     public:
         /**
-         * @brief Construct a new Encoder object
-         *
-         * @param reversed whether the encoder should be reversed or not. Defaults to false
-         * @param gearRatio the ratio of the encoder's gearing. Teeth of driven gear / teeth of driving gear. Defaults
-         * to 1.0
-         */
-        Encoder(bool reversed = false, float gearRatio = 1.0);
-        /**
          * @brief Calibrate the encoder
          *
          * This function should be non-blocking and should return as fast as possible.
@@ -92,7 +84,7 @@ class Encoder {
          * @return true the encoder is reversed
          * @return false the encoder is not reversed
          */
-        bool getReversed() const;
+        virtual bool getReversed() = 0;
         /**
          * @brief set whether the encoder should be reversed or not
          *
@@ -102,13 +94,13 @@ class Encoder {
          *
          * @param reversed whether the encoder should be reversed or not
          */
-        void setReversed(bool reversed);
+        virtual void setReversed(bool reversed) = 0;
         /**
          * @brief Get the gear ratio of the encoder
          *
          * @return float teeth of driven gear / teeth of driving gear
          */
-        float getGearRatio() const;
+        virtual float getGearRatio() = 0;
         /**
          * @brief Set the gear ratio of the encoder
          *
@@ -119,13 +111,10 @@ class Encoder {
          *
          * @param gearRatio teeth of driven gear / teeth of driving gear
          */
-        void setGearRatio(float gearRatio);
+        virtual void setGearRatio(float gearRatio) = 0;
         /**
          * @brief Destroy the Encoder object
          *
          */
         virtual ~Encoder();
-    protected:
-        bool reversed; /** whether the encoder is reversed or not */
-        float gearRatio; /** the gear ratio of the encoder gearbox. Teeth of driven gear / teeth of driving gear */
 };

@@ -252,6 +252,25 @@
                 "target": "v5",
                 "user_files": [],
                 "version": "8.3.8"
+            },
+            "units": {
+                "location": "/home/liam/.config/pros/templates/units@0.1.0",
+                "metadata": {
+                    "origin": "local"
+                },
+                "name": "units",
+                "py/object": "pros.conductor.templates.local_template.LocalTemplate",
+                "supported_kernels": "^4.0.7",
+                "system_files": [
+                    "include/units/Vector2D.hpp",
+                    "include/units/Angle.hpp",
+                    "firmware/units.a",
+                    "include/units/Pose.hpp",
+                    "include/units/units.hpp"
+                ],
+                "target": "v5",
+                "user_files": [],
+                "version": "0.1.0"
             }
         },
         "upload_options": {},

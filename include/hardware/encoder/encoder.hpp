@@ -46,7 +46,7 @@ class Encoder {
         /**
          * @brief tare the encoder
          *
-         * This function is used to reset the encoder's measured angle to compass angle north.
+         * This function is used to reset the encoder's measured angle to compass angle east.
          * This does not affect the encoder's calibration status, as it is analogous to calling
          * setAngle(0_cdeg)
          */

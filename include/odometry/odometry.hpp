@@ -5,4 +5,5 @@
 class Odometry {
     public:
         virtual units::Pose update() = 0;
+        virtual ~Odometry();
 };

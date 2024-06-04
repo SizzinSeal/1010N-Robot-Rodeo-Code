@@ -8,10 +8,10 @@
  * @brief
  *
  */
-class TrackingWheelOdom : public Odometry {
+class PerpWheelOdom : public Odometry {
     public:
-        TrackingWheelOdom(std::unique_ptr<TrackingWheel> verticalWheel, std::unique_ptr<TrackingWheel> horizontalWheel,
-                          std::unique_ptr<IMU> imu);
+        PerpWheelOdom(std::unique_ptr<TrackingWheel> verticalWheel, std::unique_ptr<TrackingWheel> horizontalWheel,
+                      std::unique_ptr<IMU> imu);
         units::Pose update() override;
     private:
         const std::unique_ptr<TrackingWheel> verticalWheel;

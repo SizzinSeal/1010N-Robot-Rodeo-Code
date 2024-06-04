@@ -37,7 +37,7 @@ class TrackingWheel {
          */
         void reset();
     private:
-        const std::unique_ptr<Encoder> encoder;
+        const std::shared_ptr<Encoder> encoder;
         const Length radius;
         const Length offset;
 };

@@ -9,7 +9,7 @@
  * @tparam in the type of the input
  * @tparam out the type of the output
  */
-template <typename In, typename Out> class AbstractController {
+template <typename In, typename Out> class Controller {
     public:
         /**
          * @brief Update the controller
@@ -19,4 +19,9 @@ template <typename In, typename Out> class AbstractController {
          * @return out the output of the controller
          */
         virtual Out update(In input) = 0;
+        /**
+         * @brief Destroy the Controller object
+         *
+         */
+        virtual ~Controller() {};
 };

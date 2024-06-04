@@ -4,6 +4,9 @@
 
 class Odometry {
     public:
+        Odometry(units::Pose pose = {0_m, 0_m, 0_cRad});
         virtual units::Pose update() = 0;
         virtual ~Odometry();
+    protected:
+        units::Pose pose;
 };

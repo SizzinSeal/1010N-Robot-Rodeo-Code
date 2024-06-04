@@ -37,7 +37,7 @@ units::Pose PerpWheelOdom::update() {
     const Length deltaHorizontal = horizontal - prevHorizontal.value();
     const Angle deltaAngle = angle - prevAngle.value();
     // calculate average angle
-    const Angle avgAngle = *prevAngle + deltaAngle / 2;
+    const Angle avgAngle = prevAngle.value() + deltaAngle / 2;
     // update previous values
     prevVertical = vertical;
     prevHorizontal = horizontal;
@@ -48,6 +48,7 @@ units::Pose PerpWheelOdom::update() {
     units::Pose localPose = {localX, localY};
     // rotate the local coordinates by the average angle to get the change in global coordinates
     localPose.rotateBy(avgAngle);
+    // add the change in global coordinates to the current pose
     pose += localPose;
     // set the global heading
     pose.setTheta(angle);

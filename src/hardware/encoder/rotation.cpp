@@ -11,8 +11,8 @@ Rotation::Rotation(int port, float gearRatio)
 void Rotation::calibrate() { sensor->reset_position(); }
 
 int Rotation::getStatus() {
-    if (sensor->is_installed()) return EncoderStatus::UNKNOWN_ERROR;
-    else return EncoderStatus::CALIBRATED;
+    if (sensor->is_installed()) return ENCODER_UNKNOWN_ERROR;
+    else return ENCODER_CALIBRATED;
 }
 
 void Rotation::tare() { sensor->reset_position(); }

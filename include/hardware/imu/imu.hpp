@@ -13,7 +13,7 @@
  * status codes defined in the enum, and for additional status codes that are not defined
  * we can check if the status code is greater than the highest defined status code.
  */
-enum IMUStatus { CALIBRATED = 0, CALIBRATING = 1, NOT_CALIBRATED = 2, UNKOWN_ERROR = 3 };
+enum IMUStatus { IMU_CALIBRATED = 0, IMU_CALIBRATING = 1, IMU_NOT_CALIBRATED = 2, IMU_UNKOWN_ERROR = 3 };
 
 /**
  * @brief IMUOrientation enum

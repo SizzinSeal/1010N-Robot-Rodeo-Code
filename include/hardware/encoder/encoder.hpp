@@ -9,10 +9,10 @@
  * of this abstract class to add additional status codes if needed.
  */
 enum EncoderStatus {
-    CALIBRATED = 0, /** the encoder has been calibrated and is ready to use */
-    CALIBRATING = 1, /** the encoder is currently calibrating */
-    NOT_CALIBRATED = 2, /** the encoder is not calibrated but is functioning */
-    UNKNOWN_ERROR = 3 /** the encoder is not functioning */
+    ENCODER_CALIBRATED = 0, /** the encoder has been calibrated and is ready to use */
+    ENCODER_CALIBRATING = 1, /** the encoder is currently calibrating */
+    ENCODER_NOT_CALIBRATED = 2, /** the encoder is not calibrated but is functioning */
+    ENCODER_UNKNOWN_ERROR = 3 /** the encoder is not functioning */
 };
 
 /**

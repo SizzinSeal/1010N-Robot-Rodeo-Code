@@ -14,9 +14,9 @@ void V5IMU::calibrate() { imu->reset(); }
 int V5IMU::getStatus() {
     const pros::ImuStatus status = imu->get_status();
     switch (status) {
-        case pros::ImuStatus::calibrating: return IMUStatus::CALIBRATING;
-        case pros::ImuStatus::ready: return IMUStatus::CALIBRATED;
-        default: return IMUStatus::UNKOWN_ERROR;
+        case pros::ImuStatus::calibrating: return IMU_CALIBRATING;
+        case pros::ImuStatus::ready: return IMU_CALIBRATED;
+        default: return IMUStatus::IMU_UNKOWN_ERROR;
     }
 }
 

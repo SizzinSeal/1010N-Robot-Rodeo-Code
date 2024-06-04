@@ -1,7 +1,5 @@
 #include "main.h"
 
-#include "hardware/trackingWheel.hpp"
-
 /**
  * A callback function for LLEMU's center button.
  *

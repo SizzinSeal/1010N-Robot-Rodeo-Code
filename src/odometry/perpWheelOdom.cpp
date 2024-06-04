@@ -33,20 +33,23 @@ units::Pose PerpWheelOdom::update() {
     if (prevHorizontal == std::nullopt) prevHorizontal = horizontal;
     if (prevAngle == std::nullopt) prevAngle = angle;
     // calculate deltas
-    const Length deltaVertical = vertical - *prevVertical;
-    const Length deltaHorizontal = horizontal - *prevHorizontal;
-    const Angle deltaAngle = angle - *prevAngle;
+    const Length deltaVertical = vertical - prevVertical.value();
+    const Length deltaHorizontal = horizontal - prevHorizontal.value();
+    const Angle deltaAngle = angle - prevAngle.value();
     // calculate average angle
     const Angle avgAngle = *prevAngle + deltaAngle / 2;
     // update previous values
-    *prevVertical = vertical;
-    *prevHorizontal = horizontal;
-    *prevAngle = angle;
-    // calculate local X and Y coordinates
+    prevVertical = vertical;
+    prevHorizontal = horizontal;
+    prevAngle = angle;
+    // calculate local coordinates
     const Length localX = calculateChord(deltaHorizontal, horizontalWheel->getOffset(), deltaAngle);
     const Length localY = calculateChord(deltaVertical, verticalWheel->getOffset(), deltaAngle);
-    units::V2Position localPose = {localX, localY};
-    // rotate the local coordinates by the average angle to get the global coordinates
-    pose = units::Pose(localPose.rotatedBy(avgAngle), angle);
+    units::Pose localPose = {localX, localY};
+    // rotate the local coordinates by the average angle to get the change in global coordinates
+    localPose.rotateBy(avgAngle);
+    pose += localPose;
+    // set the global heading
+    pose.setTheta(angle);
     return pose;
 }

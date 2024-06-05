@@ -45,7 +45,10 @@ class Pose : public V2Position {
          * @param nx x position
          * @param ny y position
          */
-        Pose(Length nx, Length ny);
+        Pose(Length nx, Length ny) {
+            V2Position(nx, ny);
+            theta = 0_stRad;
+        }
 
         /**
          * @brief Construct a new Pose object

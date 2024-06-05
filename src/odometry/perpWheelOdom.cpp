@@ -68,7 +68,7 @@ units::Pose PerpWheelOdom::update() {
     // calculate local coordinates
     const Length localX = calculateChord(deltaHorizontal, horizontalWheel->getOffset(), deltaAngle);
     const Length localY = calculateChord(deltaVertical, verticalWheel->getOffset(), deltaAngle);
-    units::Pose localPose = {localX, localY};
+    units::Pose localPose(localX, localY);
     // rotate the local coordinates by the average angle to get the change in global coordinates
     localPose.rotateBy(avgAngle);
     // add the change in global coordinates to the current pose

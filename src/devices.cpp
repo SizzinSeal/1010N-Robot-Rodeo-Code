@@ -6,10 +6,10 @@
 // configure odometry
 std::shared_ptr<Rotation> verticalEncoder = std::make_shared<Rotation>(5); // TODO: change port
 std::shared_ptr<TrackingWheel> verticalWheel =
-    std::make_shared<TrackingWheel>(&verticalEncoder, 2.75_in, 0_in); // TODO: configure lengths
-Rotation horizontalEncoder(6); // TODO: change port
+    std::make_shared<TrackingWheel>(verticalEncoder, 2.75_in, 0_in); // TODO: configure lengths
+std::shared_ptr<Rotation> horizontalEncoder = std::make_shared<Rotation>(6); // TODO: change port
 std::shared_ptr<TrackingWheel> horizontalWheel =
-    std::make_shared<TrackingWheel>(&horizontalEncoder, 2.75_in, 0_in); // TODO: configure lengths
+    std::make_shared<TrackingWheel>(horizontalEncoder, 2.75_in, 0_in); // TODO: configure lengths
 std::shared_ptr<V5IMU> imu = std::make_shared<V5IMU>(7); // TODO: change port
 std::shared_ptr<PerpWheelOdom> odometry = std::make_shared<PerpWheelOdom>(verticalWheel, horizontalWheel, imu);
 

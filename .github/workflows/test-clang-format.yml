@@ -15,6 +15,6 @@ jobs:
     - uses: actions/checkout@v2
     - uses: DoozyX/clang-format-lint-action@v0.17
       with:
-        source: './src ./include/controller ./include/hardware ./include/motion ./include/odometry ./include/timer.hpp ./include/chassis.hpp'
+        source: './src ./include/controller ./include/hardware ./include/motion ./include/odometry ./include/opcontrol ./include/timer.hpp ./include/chassis.hpp ./include/util.hpp'
         extensions: 'hpp,cpp'
         clangFormatVersion: 17

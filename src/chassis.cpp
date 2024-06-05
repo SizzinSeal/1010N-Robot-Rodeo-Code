@@ -43,18 +43,20 @@ void Chassis::move(std::unique_ptr<Motion> motion) {
     prevCompState = pros::c::competition_get_status();
 }
 
+void Chassis::stopMotion() {
+    motion.reset();
+    leftVelocityController->reset();
+    rightVelocityController->reset();
+    return;
+}
+
 void Chassis::update() {
     // update odometry
     const units::Pose pose = odometry->update();
     // update motion
     if (motion != nullptr) {
         // stop the motion if needed
-        if (!motion->isRunning() || pros::competition::get_status() != prevCompState) {
-            motion.reset();
-            leftVelocityController->reset();
-            rightVelocityController->reset();
-            return;
-        }
+        if (!motion->isRunning() || pros::competition::get_status() != prevCompState) stopMotion();
         const ChassisSpeeds speeds = motion->update(pose);
         // update velocity controllers if needed, reset otherwise and use open loop control
         if (speeds.velocity) {

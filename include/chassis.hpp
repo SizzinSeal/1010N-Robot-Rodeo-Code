@@ -45,6 +45,11 @@ class Chassis {
          * @param motion
          */
         void move(std::unique_ptr<Motion> motion);
+        /**
+         * @brief stop the current motion
+         *
+         */
+        void stopMotion();
     protected:
         /**
          * @brief update odometry the motion alg, and velocity controllers

@@ -35,12 +35,11 @@ class Motion {
          * The parameters are used to calculate the linear and angular velocity of the robot
          * as well as to modify the output speeds to prevent the motors from becoming saturated
          *
-         * @param trackWidth the track width of the robot
-         * @param maxDriveVelocity the maximum theoretical velocity of the robot
+         * @param maxDriveVelocity the maximum theoretical velocity of the robot. Default is 0
          * @param desaturateBias the weight to determine whether to prioritize linear or angular velocity. 0 fully
          * prioritizes linear velocity, 1 fully prioritizes angular velocity. Default is 0.5
          */
-        Motion(const Length trackWidth, const LinearVelocity maxDriveVelocity, const float desaturateBias = 0.5);
+        Motion(const LinearVelocity maxDriveVelocity = 0, const float desaturateBias = 0.5);
         /**
          * @brief Calculates the speed of the left and right wheels of a differential drive robot
          *
@@ -62,7 +61,6 @@ class Motion {
         virtual ~Motion();
     protected:
         bool running = true; /** whether the motion is running or not */
-        const Length trackWidth; /** the track width of the robot */
         const LinearVelocity maxDriveVelocity; /** the maximum velocity of the robot */
         float desaturateBias; /** weight to determine whether to prioritize linear or angular velocity when
                                desaturating the motors */

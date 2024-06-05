@@ -46,13 +46,15 @@ void Chassis::update() {
     // update motion
     if (motion != nullptr) {
         const ChassisSpeeds speeds = motion->update(pose);
-        // update velocity controllers if needed, reset otherwise
+        // update velocity controllers if needed, reset otherwise and use open loop control
         if (speeds.velocity) {
             leftVelocityController->update({speeds.leftVelocity.val(), avg(leftDrive->get_actual_velocity_all())});
             rightVelocityController->update({speeds.rightVelocity.val(), avg(rightDrive->get_actual_velocity_all())});
         } else {
             leftVelocityController->reset();
             rightVelocityController->reset();
+            leftDrive->move(speeds.leftPwr * 127);
+            rightDrive->move(speeds.rightPwr * 127);
         }
     }
 }

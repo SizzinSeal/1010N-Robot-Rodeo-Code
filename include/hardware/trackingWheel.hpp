@@ -8,11 +8,11 @@ class TrackingWheel {
         /**
          * @brief Construct a new Tracking Wheel object
          *
-         * @param encoder unique pointer to the encoder
+         * @param encoder shared pointer to the encoder
          * @param radius radius of the tracking wheel
          * @param offset offset of the tracking wheel
          */
-        TrackingWheel(std::unique_ptr<Encoder> encoder, Length radius, Length offset);
+        TrackingWheel(std::shared_ptr<Encoder> encoder, Length radius, Length offset);
         /**
          * @brief Get the distance traveled by the tracking wheel
          *

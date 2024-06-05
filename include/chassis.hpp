@@ -25,15 +25,13 @@ class Chassis {
          * @param rightVelocityController shared ptr to the angular velocity controller
          * @param linearPositionController shared ptr to the linear position controller
          * @param angularPositionController shared ptr to the angular position controller
-         * @param motion shared ptr to the motion object
          */
         Chassis(const std::shared_ptr<pros::MotorGroup> leftDrive, const std::shared_ptr<pros::MotorGroup> rightDrive,
                 const std::shared_ptr<Odometry> odometry, const Length trackWidth,
                 const std::shared_ptr<Controller<VelocityControllerInput, double>> leftVelocityController,
                 const std::shared_ptr<Controller<VelocityControllerInput, double>> rightVelocityController,
                 const std::shared_ptr<Controller<double, double>> linearPositionController,
-                const std::shared_ptr<Controller<double, double>> angularPositionController,
-                const std::shared_ptr<Motion> motion);
+                const std::shared_ptr<Controller<double, double>> angularPositionController);
         /**
          * @brief initialize the chassis thread, and calibrate sensors
          *

@@ -1,7 +1,7 @@
 #include "hardware/trackingWheel.hpp"
 
-TrackingWheel::TrackingWheel(std::unique_ptr<Encoder> encoder, Length radius, Length offset)
-    : encoder(std::move(encoder)),
+TrackingWheel::TrackingWheel(std::shared_ptr<Encoder> encoder, Length radius, Length offset)
+    : encoder(encoder),
       radius(radius),
       offset(offset) {}
 

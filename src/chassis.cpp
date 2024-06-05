@@ -14,8 +14,7 @@ Chassis::Chassis(const std::shared_ptr<pros::MotorGroup> leftDrive, const std::s
                  const std::shared_ptr<Controller<VelocityControllerInput, double>> leftVelocityController,
                  const std::shared_ptr<Controller<VelocityControllerInput, double>> rightVelocityController,
                  const std::shared_ptr<Controller<double, double>> linearPositionController,
-                 const std::shared_ptr<Controller<double, double>> angularPositionController,
-                 const std::shared_ptr<Motion> motion)
+                 const std::shared_ptr<Controller<double, double>> angularPositionController)
     : leftDrive(leftDrive),
       rightDrive(rightDrive),
       odometry(odometry),

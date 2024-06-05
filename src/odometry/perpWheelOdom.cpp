@@ -1,4 +1,5 @@
 #include "odometry/perpWheelOdom.hpp"
+#include "pros/rtos.hpp"
 
 /**
  * @brief calculate the chord length of an arc traveled by the robot given the delta length, offset, and delta angle
@@ -14,11 +15,26 @@ Length calculateChord(Length deltaLength, Length offset, Angle deltaAngle) {
     return 2 * radius * units::sin(deltaAngle / 2);
 }
 
-PerpWheelOdom::PerpWheelOdom(std::unique_ptr<TrackingWheel> verticalWheel,
-                             std::unique_ptr<TrackingWheel> horizontalWheel, std::unique_ptr<IMU> imu)
-    : verticalWheel(std::move(verticalWheel)),
-      horizontalWheel(std::move(horizontalWheel)),
-      imu(std::move(imu)) {}
+PerpWheelOdom::PerpWheelOdom(std::shared_ptr<TrackingWheel> verticalWheel,
+                             std::shared_ptr<TrackingWheel> horizontalWheel, std::shared_ptr<IMU> imu)
+    : verticalWheel(verticalWheel),
+      horizontalWheel(horizontalWheel),
+      imu(imu) {}
+
+void PerpWheelOdom::calibrate() {
+    // reset the tracking wheels and the IMU
+    verticalWheel->reset();
+    if (horizontalWheel != nullptr) horizontalWheel->reset();
+    imu->calibrate();
+    pros::delay(3000);
+    // TODO: check for calibration completion
+    // reset the pose
+    pose = {0_m, 0_m, 0_cRad};
+    // reset the previous values
+    prevVertical = std::nullopt;
+    prevHorizontal = std::nullopt;
+    prevAngle = std::nullopt;
+}
 
 units::Pose PerpWheelOdom::update() {
     // get the distance traveled by the tracking wheels and the angle rotated by the IMU

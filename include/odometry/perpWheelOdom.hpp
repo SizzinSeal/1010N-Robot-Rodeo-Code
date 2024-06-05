@@ -20,8 +20,9 @@ class PerpWheelOdom : public Odometry {
          * horizontal tracking wheel
          * @param imu unique pointer to the IMU
          */
-        PerpWheelOdom(std::unique_ptr<TrackingWheel> verticalWheel, std::unique_ptr<TrackingWheel> horizontalWheel,
-                      std::unique_ptr<IMU> imu);
+        PerpWheelOdom(std::shared_ptr<TrackingWheel> verticalWheel, std::shared_ptr<TrackingWheel> horizontalWheel,
+                      std::shared_ptr<IMU> imu);
+        void calibrate() override;
         /**
          * @brief Update the robot's pose
          *
@@ -29,9 +30,9 @@ class PerpWheelOdom : public Odometry {
          */
         units::Pose update() override;
     private:
-        const std::unique_ptr<TrackingWheel> verticalWheel;
-        const std::unique_ptr<TrackingWheel> horizontalWheel;
-        const std::unique_ptr<IMU> imu;
+        const std::shared_ptr<TrackingWheel> verticalWheel;
+        const std::shared_ptr<TrackingWheel> horizontalWheel;
+        const std::shared_ptr<IMU> imu;
         std::optional<Length> prevVertical;
         std::optional<Length> prevHorizontal;
         std::optional<Angle> prevAngle;

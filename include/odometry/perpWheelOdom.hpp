@@ -22,6 +22,10 @@ class PerpWheelOdom : public Odometry {
          */
         PerpWheelOdom(std::shared_ptr<TrackingWheel> verticalWheel, std::shared_ptr<TrackingWheel> horizontalWheel,
                       std::shared_ptr<IMU> imu);
+        /**
+         * @brief calibrate the tracking wheels and IMU
+         *
+         */
         void calibrate() override;
         /**
          * @brief Update the robot's pose

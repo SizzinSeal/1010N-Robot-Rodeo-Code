@@ -1,5 +1,8 @@
 #include "odometry/perpWheelOdom.hpp"
+#include "hardware/imu/imu.hpp"
 #include "pros/rtos.hpp"
+#include "pros/misc.h"
+#include <iostream>
 
 /**
  * @brief calculate the chord length of an arc traveled by the robot given the delta length, offset, and delta angle
@@ -25,9 +28,13 @@ void PerpWheelOdom::calibrate() {
     // reset the tracking wheels and the IMU
     verticalWheel->reset();
     if (horizontalWheel != nullptr) horizontalWheel->reset();
-    imu->calibrate();
-    pros::delay(3000);
-    // TODO: check for calibration completion
+    // calibrate IMU
+    for (int i = 0; i < 5; i++) {
+        while (imu->getStatus() == IMU_CALIBRATING) pros::delay(10);
+        if (imu->getStatus() >= IMU_UNKOWN_ERROR) { std::cout << "IMU calibration failed! Try #" << i << std::endl; }
+        if (imu->getStatus() == IMU_CALIBRATED) break;
+        if (i == 4) pros::c::controller_rumble(pros::E_CONTROLLER_MASTER, "---");
+    }
     // reset the pose
     pose = {0_m, 0_m, 0_cRad};
     // reset the previous values
@@ -39,8 +46,8 @@ void PerpWheelOdom::calibrate() {
 units::Pose PerpWheelOdom::update() {
     // get the distance traveled by the tracking wheels and the angle rotated by the IMU
     const Length vertical = verticalWheel->getDistance();
-    // if horizontalWheel is nullptr, set horizontal to 0_m, otherwise set it to the distance traveled by the horizontal
-    // wheel
+    // if horizontalWheel is nullptr, set horizontal to 0_m, otherwise set it to the distance traveled by the
+    // horizontal wheel
     const Length horizontal = (horizontalWheel == nullptr) ? 0_m : horizontalWheel->getDistance();
     const Angle angle = imu->getRotation();
     // set previous values to the current values if they are not set

@@ -50,6 +50,16 @@ void Chassis::stopMotion() {
     return;
 }
 
+void Chassis::moveMotors(int left, int right) {
+    leftDrive->move(left);
+    rightDrive->move(right);
+}
+
+void Chassis::moveMotors(std::pair<int, int> powers) {
+    leftDrive->move(powers.first);
+    rightDrive->move(powers.second);
+}
+
 void Chassis::update() {
     // update odometry
     const units::Pose pose = odometry->update();

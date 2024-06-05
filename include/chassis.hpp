@@ -50,6 +50,19 @@ class Chassis {
          *
          */
         void stopMotion();
+        /**
+         * @brief move the left and right drive motors
+         *
+         * @param left left drive motor power (-127 to 127)
+         * @param right right drive motor power (-127 to 127)
+         */
+        void moveMotors(int left, int right);
+        /**
+         * @brief move the left and right drive motors
+         *
+         * @param powers a pair of left and right drive motor powers (-127 to 127)
+         */
+        void moveMotors(std::pair<int, int> powers);
     protected:
         /**
          * @brief update odometry the motion alg, and velocity controllers

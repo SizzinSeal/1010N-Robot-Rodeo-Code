@@ -1,4 +1,6 @@
 #include "chassis.hpp"
+#include "pros/misc.h"
+#include "pros/misc.hpp"
 
 double avg(std::vector<double> vec) {
     if (vec.empty()) return 0;
@@ -38,6 +40,7 @@ void Chassis::initialize() {
 void Chassis::move(std::unique_ptr<Motion> motion) {
     while (motion != nullptr) { pros::delay(10); }
     this->motion = std::move(motion);
+    prevCompState = pros::c::competition_get_status();
 }
 
 void Chassis::update() {
@@ -45,6 +48,13 @@ void Chassis::update() {
     const units::Pose pose = odometry->update();
     // update motion
     if (motion != nullptr) {
+        // stop the motion if needed
+        if (!motion->isRunning() || pros::competition::get_status() != prevCompState) {
+            motion.reset();
+            leftVelocityController->reset();
+            rightVelocityController->reset();
+            return;
+        }
         const ChassisSpeeds speeds = motion->update(pose);
         // update velocity controllers if needed, reset otherwise and use open loop control
         if (speeds.velocity) {

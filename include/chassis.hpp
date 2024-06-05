@@ -51,6 +51,7 @@ class Chassis {
          *
          */
         void update();
+        int prevCompState = -1;
         const Length trackWidth;
         // TODO: replace with LemLib motor abstraction
         const std::shared_ptr<pros::MotorGroup> leftDrive;

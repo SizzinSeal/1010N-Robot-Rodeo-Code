@@ -46,7 +46,7 @@ class Motion {
          * @param pose the current pose of the robot
          * @return DifferentialChassisSpeeds the speed of the left and right wheels
          */
-        virtual ChassisSpeeds calculate(units::Pose pose) = 0;
+        virtual ChassisSpeeds update(units::Pose pose) = 0;
         /**
          * @brief Get whether the motion is running
          *

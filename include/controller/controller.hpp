@@ -20,6 +20,12 @@ template <typename In, typename Out> class Controller {
          */
         virtual Out update(In input) = 0;
         /**
+         * @brief Reset the controller
+         *
+         * This is used to reset the controller to some initial state.
+         */
+        virtual void reset() = 0;
+        /**
          * @brief Destroy the Controller object
          *
          */

@@ -26,6 +26,9 @@ Chassis::Chassis(const std::shared_ptr<pros::MotorGroup> leftDrive, const std::s
 
 void Chassis::initialize() {
     odometry->calibrate(); // calibrate odometry
+    // reset the velocity controllers
+    leftVelocityController->reset();
+    rightVelocityController->reset();
     // start the chassis task, but only if it hasn't been started yet
     if (task == std::nullopt)
         task = pros::Task {[this]() {
@@ -37,16 +40,23 @@ void Chassis::initialize() {
 }
 
 void Chassis::move(std::unique_ptr<Motion> motion) {
-    while (motion != nullptr) { pros::delay(10); }
-    this->motion = std::move(motion);
+    // wait for the previous motion to finish
+    while (motion != nullptr) pros::delay(10);
+    // reset position controllers
+    linearPositionController->reset();
+    angularPositionController->reset();
+    // reset velocity controllers
+    leftVelocityController->reset();
+    rightVelocityController->reset();
+    // set the competition state at the start of the motion
     prevCompState = pros::c::competition_get_status();
+    // set the new motion
+    this->motion = std::move(motion);
 }
 
 void Chassis::stopMotion() {
-    motion.reset();
-    leftVelocityController->reset();
-    rightVelocityController->reset();
-    return;
+    motion.reset(); // delete the motion
+    moveMotors(0, 0); // stop the motors
 }
 
 void Chassis::moveMotors(int left, int right) {
@@ -65,7 +75,10 @@ void Chassis::update() {
     // update motion
     if (motion != nullptr) {
         // stop the motion if needed
-        if (!motion->isRunning() || pros::competition::get_status() != prevCompState) stopMotion();
+        if (!motion->isRunning() || pros::competition::get_status() != prevCompState) {
+            stopMotion();
+            return;
+        }
         const ChassisSpeeds speeds = motion->update(pose);
         // update velocity controllers if needed, reset otherwise and use open loop control
         if (speeds.velocity) {
@@ -76,8 +89,6 @@ void Chassis::update() {
             leftDrive->move(leftOut);
             rightDrive->move(rightOut);
         } else {
-            leftVelocityController->reset();
-            rightVelocityController->reset();
             leftDrive->move(speeds.leftPwr * 127);
             rightDrive->move(speeds.rightPwr * 127);
         }

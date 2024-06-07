@@ -1,16 +1,11 @@
 #pragma once
 
-#include "controller/controller.hpp"
+#include "controller/vapid.hpp"
 #include "motion/motion.hpp"
 #include "odometry/odometry.hpp"
 #include "pros/motor_group.hpp"
 #include "pros/rtos.hpp"
 #include <memory>
-
-struct VelocityControllerInput {
-        const double target;
-        const double current;
-};
 
 class Chassis {
     public:

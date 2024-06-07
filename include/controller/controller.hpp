@@ -19,15 +19,17 @@ template <typename In, typename Out> class Controller {
          * @return out the output of the controller
          */
         virtual Out update(In input) = 0;
+
         /**
          * @brief Reset the controller
          *
          * This is used to reset the controller to some initial state.
          */
         virtual void reset() = 0;
+
         /**
          * @brief Destroy the Controller object
          *
          */
-        virtual ~Controller() {};
+        virtual ~Controller() {}
 };

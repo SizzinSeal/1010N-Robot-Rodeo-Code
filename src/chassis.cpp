@@ -69,6 +69,10 @@ void Chassis::moveMotors(std::pair<int, int> powers) {
     rightDrive->move(powers.second);
 }
 
+units::Pose Chassis::getPose() { return odometry->getPose(); }
+
+void Chassis::setPose(units::Pose pose) { odometry->setPose(pose); }
+
 void Chassis::update() {
     // update odometry
     const units::Pose pose = odometry->update();

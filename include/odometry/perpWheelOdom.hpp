@@ -33,6 +33,12 @@ class PerpWheelOdom : public Odometry {
          * @return units::Pose
          */
         units::Pose update() override;
+        /**
+         * @brief Set the robot's pose
+         *
+         * @param pose
+         */
+        void setPose(units::Pose pose) override;
     private:
         const std::shared_ptr<TrackingWheel> verticalWheel;
         const std::shared_ptr<TrackingWheel> horizontalWheel;

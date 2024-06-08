@@ -56,6 +56,18 @@ class Chassis {
          * @param powers a pair of left and right drive motor powers (-127 to 127)
          */
         void moveMotors(std::pair<int, int> powers);
+        /**
+         * @brief Get the pose of the chassis
+         *
+         * @return units::Pose
+         */
+        units::Pose getPose();
+        /**
+         * @brief Set the pose of the chassis
+         *
+         * @param pose
+         */
+        void setPose(units::Pose pose);
     protected:
         /**
          * @brief update odometry the motion alg, and velocity controllers

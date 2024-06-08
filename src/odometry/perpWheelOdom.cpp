@@ -43,6 +43,11 @@ void PerpWheelOdom::calibrate() {
     prevAngle = std::nullopt;
 }
 
+void PerpWheelOdom::setPose(units::Pose pose) {
+    this->pose = pose;
+    imu->setYaw(pose.getTheta());
+}
+
 units::Pose PerpWheelOdom::update() {
     // get the distance traveled by the tracking wheels and the angle rotated by the IMU
     const Length vertical = verticalWheel->getDistance();
